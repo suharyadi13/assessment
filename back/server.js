@@ -1,10 +1,14 @@
 const express = require("express");
-// const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+
 
 const app = express();
 app.use(bodyParser.json())
+ 
+
+const path = __dirname + '/app/views/';
+app.use(express.static(path));
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -25,10 +29,14 @@ db.sequelize.sync();
 //   console.log("Drop and re-sync db.");
 // });
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Article Management For Assessemtn using VUE and Express" });
+app.get('/', function (req,res) {
+  res.sendFile(path + "index.html");
 });
+
+// // simple route
+// app.get("/", (req, res) => {
+//   res.json({ message: "Article Management For Assessemtn using VUE and Express" });
+// });
 
 
 require("./app/routes/article.routes")(app);

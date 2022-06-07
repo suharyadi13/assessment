@@ -4,7 +4,9 @@
   "description": "article management using VUE and Express",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "vue-cli-service serve",
+    "start": "node back/server.js",
   },
   "repository": {
     "type": "git",

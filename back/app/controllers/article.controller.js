@@ -2,23 +2,30 @@ const db = require("../models");
 const Article = db.articles;
 const Op = db.Sequelize.Op;
 var CryptoJS = require("crypto-js");
+var multer = require('multer');
+
+const upload = multer({
+    'dest':'uploads'
+})
 
 // Create and Save a new Article
 exports.create = (req, res) => {
   // Validate request
+  console.log(req.body);
   if (!req.body.title || !req.body.description) {
     res.status(400).send({
-      message: "title and description can not be empty!"+JSON.stringify(req.body.title)
+      message: "title and description can not be empty!"
     });
     return;
   }
-
+  const file = req.file;
   // Create a Article
   const article = {
     title: req.body.title,
     description: req.body.description,
     short_description: req.body.short_description,
     category_id: req.body.category_id,
+    image: this.file,
     is_visible: req.body.is_visible ? req.body.is_visible : false
   };
 
@@ -38,7 +45,7 @@ exports.create = (req, res) => {
 // Retrieve all Articles from the database.
 exports.findAll = (req, res) => {
   const title = req.param.search;
-  var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
+  var condition = title ? { title: { [Op.iLike]: `%${title}%` } ,is_visible:true} : null;
   console.log(condition);
   Article.findAll({ where: condition })
     .then(data => {

@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(100),
       allowNull:false,
       validate: {
-        len:[10,100],
+        len:[3,100],
       }
     }
   });
